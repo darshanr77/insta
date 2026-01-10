@@ -381,7 +381,7 @@ p::first-letter {
 
   {
     id: "p5",
-    title: "Program 5: JavaScript Calculator",
+    title: "Program 5: News Paper",
     height: "h-64",
     code: String.raw`
 <!DOCTYPE html>

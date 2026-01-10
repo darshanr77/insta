@@ -15,13 +15,13 @@ export default function Home() {
   return (
     <div className="w-full min-h-screen bg-black text-white overflow-y-auto scrollbar-hide">
       {/* 🔹 Container */}
-      <div className="max-w-5xl mx-auto p-6 sm:p-6 px-4 sm:px-6 space-y-8">
+      <div className="max-w-5xl mx-auto p-10 sm:p-6 px-4 sm:px-6 space-y-8">
 
         {/* 🔹 ALL PROGRAMS */}
         {programs.map((prog) => (
           <div
             key={prog.id}
-            className="bg-zinc-900 p-5 sm:p-5 rounded-xl border border-gray-800"
+            className="bg-zinc-900 p-10 sm:p-5 rounded-xl border border-gray-800"
           >
             {/* Header */}
             <div className="flex sm:flex-row flex-col gap-3 sm:gap-0 justify-between items-start sm:items-center mb-3">
@@ -31,7 +31,7 @@ export default function Home() {
 
               <button
                 onClick={() => copyCode(prog.id, prog.code)}
-                className={`flex items-center gap-1 px-3 py-1 text-xs rounded transition-all duration-300 w-fit
+                className={`flex items-center gap-1 px-3 py-1 text-xs cursor-pointer rounded transition-all duration-300 w-fit
                   ${
                     copiedId === prog.id
                       ? "bg-green-600 scale-105"
