@@ -9,31 +9,54 @@ export const programs = [
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My First Web Page | vtucode</title>
+    <title>My First Web Page</title>
 </head>
+
 <body>
-  <marquee>Welcome to vtucode</marquee>
 
-  <h1>This is an H1 heading</h1>
-  <h2>This is an H2 heading</h2>
-  <h3>This is an H3 heading</h3>
-  <h4>This is an H4 heading</h4>
-  <h5>This is an H5 heading</h5>
-  <h6>This is an H6 heading</h6>
+    <!-- Moving Text -->
+    <marquee>Basic HTML Tags</marquee>
 
-  <p>This is a paragraph demonstrating HTML.</p>
-  <hr>
+    <!-- Heading Tags -->
+    <h1>This is Heading 1</h1>
+    <h2>This is Heading 2</h2>
+    <h3>This is Heading 3</h3>
+    <h4>This is Heading 4</h4>
+    <h5>This is Heading 5</h5>
+    <h6>This is Heading 6</h6>
 
-  <blockquote>This is a blockquote.</blockquote>
+    <!-- Paragraph -->
+    <p>This is a simple paragraph used to demonstrate HTML paragraph tag.</p>
 
-  <pre>
-This is preformatted text.
-It preserves spacing.
-  </pre>
+    <!-- Horizontal Line -->
+    <hr>
 
-  <p><b>Bold</b> <i>Italic</i> <u>Underline</u></p>
+    <!-- Line Break -->
+    This is first line <br>
+    This is second line
+
+    <!-- Block Quote -->
+    <blockquote>
+        Learning HTML is the first step towards web development.
+    </blockquote>
+
+    <!-- Pre Tag -->
+    <pre>
+HTML
+     preserves
+            spaces
+    and line breaks
+    </pre>
+
+    <!-- Logical Styles -->
+    <b>Bold Text</b><br>
+    <u>Underlined Text</u><br>
+    Water formula: H<sub>2</sub>O <br>
+    (a+b)<sup>2</sup> = a<sup>2</sup> + b<sup>2</sup> + 2ab
+
 </body>
 </html>
+
 `
   },
 
@@ -43,57 +66,43 @@ It preserves spacing.
     height: "h-72",
     code: String.raw`
 <!DOCTYPE html>
-
+<html>
 <head>
+    <title>Time Table</title>
 
-    <title>Time Table | vtucode</title>
-    
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
         table {
             width: 80%;
-            margin: 20px auto;
+            margin: auto;
             border-collapse: collapse;
+            font-family: Arial;
         }
 
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
             text-align: center;
         }
 
         th {
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #4CAF50;
+            color: white;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .lab {
+            background-color: #ff9999;   /* Lab hours */
         }
 
-        tr:nth-child(odd) {
-            background-color: #e6f7ff;
+        .elective {
+            background-color: #99ff99;  /* Elective hours */
         }
 
-        .lab-hour {
-            background-color: #ffcccc;
-        }
-
-        .elective-hour {
-            background-color: #ccffcc;
-        }
-
-        .highlight {
-            font-weight: bold;
-            color: #d63384;
+        .rowcolor {
+            background-color: #f2f2f2;  /* Row color */
         }
 
         tfoot {
-            background-color: #e0e0e0;
+            background-color: #ddd;
             font-weight: bold;
         }
     </style>
@@ -101,79 +110,65 @@ It preserves spacing.
 
 <body>
 
-    <h1 style="text-align: center;">Time Table</h1>
+<h2 align="center">Class Time Table</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Day/Time</th>
-                <th>9:00 - 10:00</th>
-                <th>10:00 - 11:00</th>
-                <th>11:00 - 12:00</th>
-                <th>12:00 - 1:00</th>
-                <th>Lunch Break</th>
-                <th>2:00 - 3:00</th>
-                <th>3:00 - 4:00</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Monday</td>
-                <td>Math</td>
-                <td>English</td>
-                <td class="lab-hour">Physics Lab</td>
-                <td>Elective</td>
-                <td rowspan="5" class="highlight">Break</td>
-                <td class="elective-hour">Elective</td>
-                <td>History</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td class="elective-hour">Elective</td>
-                <td>Biology</td>
-                <td>Math</td>
-                <td class="lab-hour">Chemistry Lab</td>
-                <td>Geography</td>
-                <td>PE</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>History</td>
-                <td class="lab-hour">Computer Lab</td>
-                <td>English</td>
-                <td>Math</td>
-                <td>Physics</td>
-                <td class="elective-hour">Elective</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>PE</td>
-                <td>History</td>
-                <td>Geography</td>
-                <td class="elective-hour">Elective</td>
-                <td>Biology</td>
-                <td>Math</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td class="lab-hour">Biology Lab</td>
-                <td>Math</td>
-                <td>English</td>
-                <td>Physics</td>
-                <td class="elective-hour">Elective</td>
-                <td>Chemistry</td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="8">End of Timetable</td>
-            </tr>
-        </tfoot>
-    </table>
+<table>
+    <!-- Table Header -->
+    <thead>
+        <tr>
+            <th>Day / Time</th>
+            <th>9:00 - 10:00</th>
+            <th>10:00 - 11:00</th>
+            <th>11:00 - 12:00</th>
+            <th>12:00 - 1:00</th>
+        </tr>
+    </thead>
+
+    <!-- Table Body -->
+    <tbody>
+        <tr class="rowcolor">
+            <td>Monday</td>
+            <td>Maths</td>
+            <td class="lab" colspan="2">Web Lab</td>
+            <td>Physics</td>
+        </tr>
+
+        <tr>
+            <td>Tuesday</td>
+            <td>English</td>
+            <td>Maths</td>
+            <td class="elective">Elective</td>
+            <td>Chemistry</td>
+        </tr>
+
+        <tr class="rowcolor">
+            <td>Wednesday</td>
+            <td rowspan="2" class="lab">Lab</td>
+            <td>Physics</td>
+            <td>Maths</td>
+            <td class="elective">Elective</td>
+        </tr>
+
+        <tr>
+            <td>Thursday</td>
+            <td>Chemistry</td>
+            <td>English</td>
+            <td>Maths</td>
+        </tr>
+    </tbody>
+
+    <!-- Table Footer -->
+    <tfoot>
+        <tr>
+            <td colspan="5">End of Time Table</td>
+        </tr>
+    </tfoot>
+</table>
 
 </body>
-
 </html>
+
+
 `
   },
 
@@ -183,38 +178,94 @@ It preserves spacing.
     height: "h-64",
     code: String.raw`
 <!DOCTYPE html>
-
+<html>
 <head>
-    <title>Styled HTML Page | vtucode</title>
+    <title>External CSS Demo</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <h2>Main Heading</h2>
-    <h3>Subheading</h3>
-    <hr>
-    <p>This is a paragraph demonstrating the basic text styling applied by CSS.</p>
+<h2>External CSS Example</h2>
 
-    <div>
-        This is a styled <strong>div</strong> element with padding and a light border. Inside the div, we can also use
-        <span>span elements</span> that have their own styles, like this bold and orange text.
-    </div>
+<h3 class="heading">This is H3 with Class Selector</h3>
 
-    <p>Current time: <time>10:30 AM</time></p>
+<hr id="line">
 
-    <img src="https://vtucode.in/wp-content/uploads/2024/08/Web-Technology-Lab.jpg" alt="Placeholder Image">
+<div>
+    <p>This paragraph is inside a div.</p>
+    <span>This is span text</span>
+</div>
 
-    <p>Visit <a href="https://vtucode.in">vtucode.in</a> to learn more about our services.</p>
+<p>This paragraph shows pseudo-element.</p>
 
-    <p class="highlight">This paragraph is highlighted with a yellow background.</p>
-    <p class="center">This text is centered using a class selector.</p>
+<time datetime="2025-01-20">20 January 2025</time>
+<br><br>
 
-    <p id="special-paragraph">This is a special paragraph with unique styles applied through an ID selector.</p>
+<img src="https://via.placeholder.com/150">
+
+<br><br>
+<a href="#">Hover over this link</a>
 
 </body>
-
 </html>
+/* Universal Selector */
+* {
+    margin: 5px;
+    font-family: Arial, sans-serif;
+}
+
+/* Tag Selector */
+h2 {
+    color: green;
+    text-align: center;
+}
+
+/* Class Selector */
+h3.heading {
+    color: blue;
+}
+
+/* ID Selector */
+hr#line {
+    height: 3px;
+    background-color: black;
+}
+
+/* Descendant Selector */
+div p {
+    color: brown;
+    font-size: 16px;
+}
+
+/* Child Selector */
+div > span {
+    color: red;
+    font-weight: bold;
+}
+
+/* Attribute Selector */
+time[datetime] {
+    color: purple;
+}
+
+/* Element Selector */
+img {
+    border: 2px solid black;
+    width: 150px;
+}
+
+/* Pseudo-class Selector */
+a:hover {
+    color: orange;
+}
+
+/* Pseudo-element Selector */
+p::first-letter {
+    font-size: 30px;
+    color: navy;
+}
+
 `
   },
 
@@ -224,156 +275,107 @@ It preserves spacing.
     height: "h-64",
     code: String.raw`
 <!DOCTYPE html>
-
+<html>
 <head>
-    <title>Registration Form | vtucode</title>
+    <title>Registration Form</title>
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            background-color: #f0f8ff;
+            font-family: Arial;
+            color: #333;
         }
 
         h2 {
             text-align: center;
-            color: #333;
-            margin: 0;
+            color: darkblue;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin-bottom: 10px;
+        table {
+            margin: auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
         }
 
-        label {
-            font-size: 14px;
-            color: #555;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="date"],
-        select,
-        textarea {
+        td {
             padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            font-size: 16px;
+            color: #000080;
+        }
+
+        input, select {
+            padding: 5px;
             font-size: 14px;
         }
 
-        .gender-options {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        input[type="submit"],
-        input[type="reset"] {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        .btn {
+            background-color: green;
+            color: white;
             font-size: 16px;
-            flex: 1;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        input[type="reset"] {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .form-group textarea {
-            margin-bottom: 10px;
+            padding: 8px 20px;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2>Registration Form</h2>
-        <form action="#" method="post">
-            <div class="form-group">
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" required>
-            </div>
-            <div class="form-group">
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob">
-            </div>
-            <div class="form-group">
-                <label>Gender:</label>
-                <div class="gender-options">
-                    <input type="radio" id="male" name="gender" value="male">
-                    <label for="male">Male</label>
-                    <input type="radio" id="female" name="gender" value="female">
-                    <label for="female">Female</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="country">Country:</label>
-                <select id="country" name="country">
-                    <option value="usa">USA</option>
-                    <option value="canada">Canada</option>
-                    <option value="uk">UK</option>
-                    <option value="india">India</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="bio">Bio:</label>
-                <textarea id="bio" name="bio" rows="4"></textarea>
-            </div>
-            <div class="button-group">
-                <input type="submit" value="Register">
-                <input type="reset" value="Reset">
-            </div>
-        </form>
-    </div>
-</body>
 
+<h2>Student Registration Form</h2>
+
+<form>
+    <table>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" placeholder="Enter Name"></td>
+        </tr>
+
+        <tr>
+            <td>Email:</td>
+            <td><input type="email" placeholder="Enter Email"></td>
+        </tr>
+
+        <tr>
+            <td>Password:</td>
+            <td><input type="password"></td>
+        </tr>
+
+        <tr>
+            <td>Gender:</td>
+            <td>
+                <input type="radio" name="g"> Male
+                <input type="radio" name="g"> Female
+            </td>
+        </tr>
+
+        <tr>
+            <td>Course:</td>
+            <td>
+                <select>
+                    <option>CSE</option>
+                    <option>ISE</option>
+                    <option>ECE</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Date of Birth:</td>
+            <td><input type="date"></td>
+        </tr>
+
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" class="btn" value="Register">
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
 </html>
+
 `
   },
 
@@ -799,286 +801,244 @@ It preserves spacing.
 `
   },
 
+   {
+    id: "p6",
+    title: "Program 6 : simple calculator",
+    height: "h-72",
+    code: String.raw`
+<!DOCTYPE html>
+<html>
+<head>
+<title>Calculator</title>
+
+<style>
+    body {
+        background: #f2f2f2;
+        font-family: Arial;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .box {
+        background: white;
+        padding: 20px;
+        width: 260px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    input {
+        width: 90%;
+        padding: 8px;
+        margin: 6px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .btns button {
+        padding: 8px 12px;
+        margin: 4px;
+        border: none;
+        border-radius: 5px;
+        background: #4CAF50;
+        color: white;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .btns button:hover {
+        background: #45a049;
+    }
+
+    p {
+        margin-top: 15px;
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h3>Simple Calculator</h3>
+
+    <input id="a" placeholder="Number 1">
+    <input id="b" placeholder="Number 2">
+
+    <div class="btns" id="buttons"></div>
+
+    <p>Result: <span id="r">0</span></p>
+</div>
+
+<script>
+    let ops = ["+", "-", "*", "/", "%", "^", "sq"];
+
+    ops.map(x => {
+        let btn = document.createElement("button");
+        btn.innerText = x;
+        btn.onclick = () => calc(x);
+        buttons.appendChild(btn);
+    });
+
+    function calc(op) {
+        let x = Number(a.value);
+        let y = Number(b.value);
+        let res = 0;
+
+        if (op == "+") res = x + y;
+        if (op == "-") res = x - y;
+        if (op == "*") res = x * y;
+        if (op == "/") res = x / y;
+        if (op == "%") res = x % y;
+        if (op == "^") res = x ** y;
+        if (op == "sq") res = x * x;
+
+        r.innerText = res;
+    }
+</script>
+
+</body>
+</html>
+
+
+
+`
+  },
+
+
   {
     id: "p7",
     title: "Program 7: PHP Visitor Counter",
     height: "h-56",
     code: String.raw`
 <!DOCTYPE html>
-
+<html>
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <title>Simple Converter | vtucode</title>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
+<title>JSON Program</title>
 
-        body {
-            font-family: Arial, sans-serif;
-            color: #000000;
-        }
+<style>
+    body {
+        font-family: Arial;
+        background: #f2f2f2;
+        text-align: center;
+    }
 
-        .container {
-            width: 60%;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    .box {
+        background: white;
+        width: 350px;
+        margin: 20px auto;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
 
-        .head-title h1 {
-            font-size: 28px;
-            padding: 10px;
-            color: #fff;
-            margin-bottom: 50px;
-        }
+    textarea, input {
+        width: 90%;
+        margin: 6px;
+        padding: 6px;
+    }
 
-        .head-title {
-            width: 100%;
-            background: #000;
-            text-align: center;
-            border-radius: 10px;
-        }
+    button {
+        padding: 6px 12px;
+        margin: 5px;
+        cursor: pointer;
+    }
 
-        .section {
-            margin-bottom: 40px;
-            padding: 20px;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-            transition: all 0.3s;
-            overflow: hidden;
-        }
-
-        .section h2 {
-            color: #000000;
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-
-
-        textarea {
-            font-size: 14px;
-            width: 100%;
-            height: 120px;
-            margin-bottom: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #00000022;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        textarea:focus {
-            background: transparent;
-            border: 1px solid #00000022;
-            border-color: #007BFF;
-            box-shadow: 0 0 12px rgba(0, 123, 255, 0.5);
-            outline: none;
-        }
-
-        input[type="text"] {
-            width: calc(100% - 24px);
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            margin-bottom: 15px;
-        }
-
-        input[type="text"]:focus {
-            border-color: #007BFF;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-            outline: none;
-        }
-
-        button {
-            display: inline-block;
-            padding: 15px 15px;
-            margin: 10px 0;
-            font-weight: 600;
-            border: none;
-            border-radius: 7px;
-            background-color: #007BFF;
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px;
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
-        }
-
-        button:hover {
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #007BFF;
-        }
-
-        button:focus {
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #007BFF;
-        }
-
-        pre {
-            display: none;
-            background: #f8f9fa;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            overflow: auto;
-            transition: opacity 0.3s ease;
-        }
-
-        .error {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #000;
-            background: #ffdddd;
-            border-color: #ff0000;
-            padding: 10px;
-        }
-
-        .success {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #000;
-            background: #6ef08d38;
-            border-color: #47e56d;
-            padding: 10px;
-        }
-
-        .adjust-area {
-            margin-top: 30px;
-        }
-    </style>
+    pre {
+        background: #eee;
+        padding: 8px;
+        text-align: left;
+        overflow-x: auto;
+    }
+</style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="head-title">
-            <h1>Simple Converter</h1>
-        </div>
-        <div class="section">
-            <h2>1. Convert JSON Text to JavaScript Object</h2>
-            <textarea id="jsonInput" placeholder="Enter JSON here..."></textarea>
-            <button onclick="convertJsonToObject()">Convert JSON</button>
-            <pre id="jsonOutput" class="output"></pre>
-        </div>
 
-        <div class="section">
-            <h2>2. Convert JSON Results into Date</h2>
-            <textarea id="jsonDateInput" placeholder='Enter JSON with date in "yyyy-mm-dd" format'></textarea>
-            <button onclick="convertJsonToDate()">Convert to Date</button>
-            <pre id="jsonDateOutput" class="output"></pre>
-        </div>
+<div class="box">
+    <h3>a) JSON → JavaScript Object</h3>
+    <textarea id="jsonText">{ "name":"Rahul", "age":20 }</textarea>
+    <button onclick="jsonToObj()">Convert</button>
+    <pre id="objOut"></pre>
+</div>
 
-        <div class="section">
-            <h2>3. Convert JSON to CSV and CSV to JSON</h2>
-            <textarea id="jsonCsvInput" placeholder="Enter JSON for CSV conversion..."></textarea>
-            <button onclick="convertJsonToCsv()">JSON to CSV</button>
-            <pre id="csvOutput" class="output"></pre>
-            <textarea id="csvInput" placeholder="Enter CSV here..." class="adjust-area"></textarea>
-            <button onclick="convertCsvToJson()">CSV to JSON</button>
-            <pre id="jsonCsvOutput" class="output"></pre>
-        </div>
+<div class="box">
+    <h3>b) JSON Date → JavaScript Date</h3>
+    <textarea id="jsonDate">{ "date":"2024-01-20" }</textarea>
+    <button onclick="jsonToDate()">Convert</button>
+    <p id="dateOut"></p>
+</div>
 
-        <div class="section">
-            <h2>4. Create Hash from String</h2>
-            <input type="text" id="hashInput" placeholder="Enter string to hash">
-            <button onclick="createHash()">Create Hash</button>
-            <pre id="hashOutput" class="output"></pre>
-        </div>
-    </div>
+<div class="box">
+    <h3>c) JSON ↔ CSV</h3>
+    <textarea id="jsonCsv">[{"name":"A","age":20},{"name":"B","age":22}]</textarea>
+    <button onclick="jsonToCsv()">JSON → CSV</button>
+    <button onclick="csvToJson()">CSV → JSON</button>
+    <pre id="csvOut"></pre>
+    <pre id="jsonOut"></pre>
+</div>
 
-    <script>
-        function showResult(id, text, isSuccess) {
-            const element = document.getElementById(id);
-            element.textContent = text;
-            element.className = isSuccess ? 'success' : 'error';
-            element.style.display = 'block';
-            element.style.opacity = '1';
-        }
+<div class="box">
+    <h3>d) Hash from String</h3>
+    <input id="str" placeholder="Enter text">
+    <button onclick="hashText()">Generate Hash</button>
+    <pre id="hashOut"></pre>
+</div>
 
-        function convertJsonToObject() {
-            const jsonInput = document.getElementById('jsonInput').value;
-            try {
-                const jsonObject = JSON.parse(jsonInput);
-                showResult('jsonOutput', JSON.stringify(jsonObject, null, 2), true);
-            } catch (error) {
-                showResult('jsonOutput', 'Invalid JSON', false);
-            }
-        }
+<script>
+/* a) JSON to Object */
+function jsonToObj() {
+    let obj = JSON.parse(jsonText.value);
+    objOut.innerText = JSON.stringify(obj, null, 2);
+}
 
-        function convertJsonToDate() {
-            const jsonDateInput = document.getElementById('jsonDateInput').value;
-            try {
-                const data = JSON.parse(jsonDateInput);
-                if (data.date && !isNaN(new Date(data.date).getTime())) {
-                    const date = new Date(data.date);
-                    showResult('jsonDateOutput', date.toString(), true);
-                } else {
-                    showResult('jsonDateOutput', 'Invalid Date Format', false);
-                }
-            } catch (error) {
-                showResult('jsonDateOutput', 'Invalid JSON', false);
-            }
-        }
+/* b) JSON to Date */
+function jsonToDate() {
+    let obj = JSON.parse(jsonDate.value);
+    let d = new Date(obj.date);
+    dateOut.innerText = d;
+}
 
-        function convertJsonToCsv() {
-            const jsonInput = document.getElementById('jsonCsvInput').value;
-            try {
-                const jsonArray = JSON.parse(jsonInput);
-                if (Array.isArray(jsonArray) && jsonArray.length > 0) {
-                    const keys = Object.keys(jsonArray[0]);
-                    const csv = [
-                        keys.join(','),
-                        ...jsonArray.map(row => keys.map(key => JSON.stringify(row[key])).join(','))
-                    ].join('\n');
-                    showResult('csvOutput', csv, true);
-                } else {
-                    showResult('csvOutput', 'Invalid JSON: Expected an array with objects.', false);
-                }
-            } catch (error) {
-                showResult('csvOutput', 'Invalid JSON', false);
-            }
-        }
+/* c) JSON to CSV */
+function jsonToCsv() {
+    let arr = JSON.parse(jsonCsv.value);
+    let keys = Object.keys(arr[0]);
+    let csv = keys.join(",") + "\n";
+    arr.forEach(o => csv += keys.map(k => o[k]).join(",") + "\n");
+    csvOut.innerText = csv;
+}
 
-        function convertCsvToJson() {
-            const csvInput = document.getElementById('csvInput').value;
-            try {
-                const lines = csvInput.trim().split('\n');
-                if (lines.length > 1) {
-                    const keys = lines[0].split(',');
-                    if (keys.length > 0) {
-                        const jsonArray = lines.slice(1).map(line => {
-                            const values = line.split(',');
-                            return keys.reduce((obj, key, index) => {
-                                obj[key] = values[index];
-                                return obj;
-                            }, {});
-                        });
-                        showResult('jsonCsvOutput', JSON.stringify(jsonArray, null, 2), true);
-                    } else {
-                        showResult('jsonCsvOutput', 'Invalid CSV: No columns found.', false);
-                    }
-                } else {
-                    showResult('jsonCsvOutput', 'Invalid CSV: No data found.', false);
-                }
-            } catch (error) {
-                showResult('jsonCsvOutput', 'Invalid CSV', false);
-            }
-        }
+/* c) CSV to JSON */
+function csvToJson() {
+    let rows = csvOut.innerText.trim().split("\n");
+    let keys = rows[0].split(",");
+    let json = rows.slice(1).map(r => {
+        let obj = {};
+        r.split(",").forEach((v,i)=>obj[keys[i]]=v);
+        return obj;
+    });
+    jsonOut.innerText = JSON.stringify(json, null, 2);
+}
 
-        function createHash() {
-            const hashInput = document.getElementById('hashInput').value.trim();
-            if (hashInput.length > 0) {
-                const hash = CryptoJS.SHA256(hashInput).toString();
-                showResult('hashOutput', hash, true);
-            } else {
-                showResult('hashOutput', 'Input cannot be empty', false);
-            }
-        }
-    </script>
+/* d) Hash from string */
+function hashText() {
+    let data = new TextEncoder().encode(str.value);
+    crypto.subtle.digest("SHA-256", data).then(h => {
+        let hex = Array.from(new Uint8Array(h))
+            .map(b => b.toString(16).padStart(2,"0"))
+            .join("");
+        hashOut.innerText = hex;
+    });
+}
+</script>
+
 </body>
-
 </html>
+
 `
   },
 
@@ -1344,144 +1304,92 @@ selectionSort($students, 'name');
     title: "Program 9: Node.js Server Program",
     height: "h-48",
     code: String.raw`
-<!DOCTYPE html>
 
+    <!DOCTYPE html>
+<html>
 <head>
+    <title>jQuery Program</title>
+
+    <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>jQuery Example | vtucode</title>
+
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
+            font-family: Arial;
+            background-color: #f2f2f2;
             text-align: center;
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .container:hover {
-            transform: scale(1.02);
-        }
-
-        #paragraph {
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 18px;
-            line-height: 1.5;
-        }
-
-        #list {
-            margin-bottom: 20px;
-            list-style: none;
-            padding: 0;
-        }
-
-        #list li {
-            background: #e8f0fe;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
-
-        #list li:hover {
-            background: #d0e2fe;
         }
 
         .box {
-            padding: 0 10px;
-            width: 100px;
+            width: 200px;
             height: 100px;
-            background-color: #007bff;
+            background-color: skyblue;
             margin: 20px auto;
             line-height: 100px;
-            color: white;
-            text-align: center;
-            border-radius: 8px;
-            transition: all 0.3s ease;
         }
 
         button {
-            padding: 12px 24px;
-            margin: 10px;
+            padding: 6px 12px;
+            margin: 5px;
             cursor: pointer;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            background: #007bff;
-            color: white;
-            transition: box-shadow 0.3s, transform 0.2s;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        button:hover {
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #007bff;
-        }
-
-        button:focus {
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #007bff;
-        }
-
-        button:active {
-            background: #004494;
-            transform: translateY(0);
+        ul {
+            list-style: none;
+            padding: 0;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <p id="paragraph">This is an existing paragraph.</p>
-        <ul id="list">
-            <li>List item 1</li>
-            <li>List item 2</li>
-        </ul>
-        <div class="box" id="box">Animate me!</div>
-        <button id="appendButton">Append Content</button>
-        <button id="animateButton">Animate Box</button>
-    </div>
 
-    <script>
-        $(document).ready(function () {
+<h2>jQuery Demo</h2>
 
-            $("#appendButton").click(function () {
-                $("#paragraph").append(" Appended text.");
-                $("#list").append("<li>New appended list item</li>");
-            });
+<!-- Paragraph -->
+<p id="para">This is a paragraph.</p>
+<button id="addPara">Append Paragraph</button>
 
-            $("#animateButton").click(function () {
+<!-- List -->
+<ul id="list">
+    <li>Item 1</li>
+    <li>Item 2</li>
+</ul>
+<button id="addList">Append List Item</button>
 
-                $("#box").stop(true, true).css({
-                    width: "100px",
-                    height: "100px",
-                    opacity: 1,
-                    backgroundColor: "blue"
-                }).animate({
-                    width: "200px",
-                    height: "200px",
-                    opacity: 0.5
-                }, 1000, function () {
+<!-- Div for animation -->
+<div class="box" id="box">Animate Me</div>
+<button id="animate">Animate Div</button>
 
-                    $(this).css("background-color", "green");
-                });
-            });
+<script>
+$(document).ready(function(){
+
+    // a) Append content to paragraph
+    $("#addPara").click(function(){
+        $("#para").append(" Added text");
+    });
+
+    // a) Append content to list
+    $("#addList").click(function(){
+        $("#list").append("<li>New Item</li>");
+    });
+
+    // b) Animate div
+    // c) Change color after animation
+    $("#animate").click(function(){
+        $("#box").animate({
+            width: "300px"
+        }, 1000, function(){
+            $(this).css("background-color", "orange");
         });
+    });
 
-    </script>
+});
+</script>
+
 </body>
-
 </html>
+
+
 `
   },
 
@@ -1490,180 +1398,124 @@ selectionSort($students, 'name');
     title: "Program 10: Full Stack Mini Project",
     height: "h-40",
     code: String.raw`
-<!DOCTYPE html>
 
+    <!DOCTYPE html>
+<html>
 <head>
-    <title>AJAX Examples | vtucode</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
+<title>AJAX Program</title>
 
-        h1 {
-            text-align: center;
-            color: #333;
-            padding: 20px 0;
-        }
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        #content {
-            flex-direction: column;
-            display: flex;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+<style>
+    body {
+        font-family: Arial;
+        background: #f2f2f2;
+        text-align: center;
+    }
 
-        button {
-            display: inline-block;
-            padding: 10px 15px;
-            margin: 12px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-            transition: box-shadow 0.3s;
-        }
+    .box {
+        background: white;
+        width: 400px;
+        margin: 20px auto;
+        padding: 15px;
+        border-radius: 8px;
+    }
 
-        button:hover {
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #007bff;
-        }
+    button {
+        padding: 6px 12px;
+        margin: 5px;
+        cursor: pointer;
+    }
 
-        button:focus {
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #007bff;
-        }
-
-
-        #output {
-            display: none;
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            white-space: pre-wrap;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        #output.plain-ajax {
-            background-color: #f0f8ff;
-            border: 1px solid #b0c4de;
-        }
-
-        #output.jquery-ajax {
-            background-color: #f5fffa;
-            border: 1px solid #98fb98;
-        }
-
-        #output.jquery-json {
-            background-color: #fffaf0;
-            border: 1px solid #ffd700;
-        }
-
-        #output.parse-json {
-            background-color: #fff0f5;
-            border: 1px solid #ff69b4;
-        }
-    </style>
+    pre {
+        background: #eee;
+        padding: 10px;
+        text-align: left;
+    }
+</style>
 </head>
 
 <body>
-    <h1>AJAX Examples</h1>
-    <div id="content">
-        <button id="plain-ajax-btn">Load Text (Plain AJAX)</button>
-        <button id="jquery-ajax-btn">Load Text (jQuery AJAX)</button>
-        <button id="jquery-json-btn">Load JSON (jQuery getJSON)</button>
-        <button id="parse-json-btn">Load and Parse JSON (jQuery get)</button>
-        <div id="output"></div>
-    </div>
 
-    <script>
+<h2>AJAX Demonstration</h2>
 
-        function showOutput(className) {
-            const output = document.getElementById('output');
-            output.className = className;
-            output.style.display = 'block';
+<!-- a) AJAX without jQuery -->
+<div class="box">
+    <h3>a) AJAX without jQuery</h3>
+    <button onclick="loadText()">Load Text</button>
+    <pre id="out1"></pre>
+</div>
+
+<!-- b) AJAX with jQuery -->
+<div class="box">
+    <h3>b) AJAX with jQuery</h3>
+    <button id="jqLoad">Load Text</button>
+    <pre id="out2"></pre>
+</div>
+
+<!-- c) getJSON -->
+<div class="box">
+    <h3>c) getJSON()</h3>
+    <button id="getJson">Load JSON</button>
+    <pre id="out3"></pre>
+</div>
+
+<!-- d) parseJSON -->
+<div class="box">
+    <h3>d) parseJSON()</h3>
+    <button id="parseJson">Parse JSON</button>
+    <pre id="out4"></pre>
+</div>
+
+<script>
+/* a) AJAX without jQuery */
+function loadText() {
+    let x = new XMLHttpRequest();
+    x.onload = function() {
+        out1.innerText = this.responseText;
+    }
+    x.open("GET", "data.txt");
+    x.send();
+}
+
+/* b) AJAX with jQuery */
+$("#jqLoad").click(function(){
+    $.ajax({
+        url: "data.txt",
+        success: function(data){
+            $("#out2").text(data);
         }
+    });
+});
 
-        document.getElementById('plain-ajax-btn').addEventListener('click', function () {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'textfile.txt', true);
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    document.getElementById('output').innerText = xhr.responseText;
-                } else {
-                    document.getElementById('output').innerText = 'Error loading file.';
-                }
-                showOutput('plain-ajax');
-            };
-            xhr.send();
-        });
+/* c) getJSON */
+$("#getJson").click(function(){
+    $.getJSON("data.json", function(data){
+        $("#out3").text("Name: " + data.name + ", Age: " + data.age);
+    });
+});
 
-        $('#jquery-ajax-btn').on('click', function () {
-            $.ajax({
-                url: 'textfile.txt',
-                method: 'GET',
-                success: function (data) {
-                    $('#output').text(data);
-                },
-                error: function () {
-                    $('#output').text('Error loading file.');
-                }
-            }).always(function () {
-                showOutput('jquery-ajax');
-            });
-        });
+/* d) parseJSON */
+$("#parseJson").click(function(){
+    let txt = '{"city":"Bangalore","state":"Karnataka"}';
+    let obj = $.parseJSON(txt);
+    $("#out4").text(obj.city + " - " + obj.state);
+});
+</script>
 
-
-        $('#jquery-json-btn').on('click', function () {
-            $.getJSON('data.json')
-                .done(function (data) {
-                    $('#output').text(JSON.stringify(data, null, 2));
-                })
-                .fail(function () {
-                    $('#output').text('Error loading JSON file.');
-                })
-                .always(function () {
-                    showOutput('jquery-json');
-                });
-        });
-
-
-        $('#parse-json-btn').on('click', function () {
-            $.get('data.json')
-                .done(function (data) {
-                    try {
-                        let jsonData;
-                        
-                        if (typeof data === 'string') {
-                            jsonData = JSON.parse(data);
-                        } else {
-                            jsonData = data;
-                        }
-                        $('#output').text(JSON.stringify(jsonData, null, 2));
-                    } catch (e) {
-                        $('#output').text('Error parsing JSON: ' + e.message);
-                    }
-                })
-                .fail(function () {
-                    $('#output').text('Error loading JSON file.');
-                })
-                .always(function () {
-                    showOutput('parse-json');
-                });
-        });
-    </script>
 </body>
-
 </html>
+
+This content is loaded using AJAX.
+
+{
+    "name": "Rahul",
+    "age": 20
+}
+
+
+
 `
-  }
+}
 ];
