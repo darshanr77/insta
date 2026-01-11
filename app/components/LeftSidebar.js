@@ -68,26 +68,20 @@ export default function LeftSidebar() {
                  border-r border-gray-800 px-2 py-6 w-[5vw] hover:w-[14vw]
                  transition-all duration-300 overflow-hidden z-50"
     >
-      {/* ✅ EXTERNAL LINK – Program 6 */}
+   
       <div className="flex items-center justify-start mb-8 ml-4">
         <a
-          href="https://vtucircle.com/bcsl504-program-6/"
-          target="_blank"
+          href="http"
+        
           rel="noopener noreferrer"
           className="flex items-center gap-4 text-gray-300 hover:text-white transition-colors"
         >
           <BsInstagram size={26} />
-          <span
-            className="opacity-0 translate-x-[-10px]
-                       group-hover:opacity-100 group-hover:translate-x-0
-                       transition-all duration-300 text-sm font-medium whitespace-nowrap"
-          >
-            6th Program
-          </span>
+         
         </a>
       </div>
 
-      {/* ✅ INTERNAL NAVIGATION */}
+  
       <nav className="flex flex-col gap-[9px]">
         {links.map(({ href, icon, active, label }) => {
           const isActive = pathname === href;
