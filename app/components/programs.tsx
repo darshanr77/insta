@@ -14,10 +14,10 @@ export const programs = [
 
 <body>
 
-    <!-- Moving Text -->
+
     <marquee>Basic HTML Tags</marquee>
 
-    <!-- Heading Tags -->
+   
     <h1>This is Heading 1</h1>
     <h2>This is Heading 2</h2>
     <h3>This is Heading 3</h3>
@@ -25,22 +25,21 @@ export const programs = [
     <h5>This is Heading 5</h5>
     <h6>This is Heading 6</h6>
 
-    <!-- Paragraph -->
+   
     <p>This is a simple paragraph used to demonstrate HTML paragraph tag.</p>
 
-    <!-- Horizontal Line -->
+    
     <hr>
 
-    <!-- Line Break -->
     This is first line <br>
     This is second line
 
-    <!-- Block Quote -->
+  
     <blockquote>
         Learning HTML is the first step towards web development.
     </blockquote>
 
-    <!-- Pre Tag -->
+   
     <pre>
 HTML
      preserves
@@ -48,7 +47,7 @@ HTML
     and line breaks
     </pre>
 
-    <!-- Logical Styles -->
+  
     <b>Bold Text</b><br>
     <u>Underlined Text</u><br>
     Water formula: H<sub>2</sub>O <br>
@@ -113,7 +112,7 @@ HTML
 <h2 align="center">Class Time Table</h2>
 
 <table>
-    <!-- Table Header -->
+   
     <thead>
         <tr>
             <th>Day / Time</th>
@@ -124,7 +123,7 @@ HTML
         </tr>
     </thead>
 
-    <!-- Table Body -->
+ 
     <tbody>
         <tr class="rowcolor">
             <td>Monday</td>
@@ -157,7 +156,7 @@ HTML
         </tr>
     </tbody>
 
-    <!-- Table Footer -->
+    
     <tfoot>
         <tr>
             <td colspan="5">End of Time Table</td>
@@ -209,62 +208,7 @@ HTML
 
 </body>
 </html>
-/* Universal Selector */
-* {
-    margin: 5px;
-    font-family: Arial, sans-serif;
-}
 
-/* Tag Selector */
-h2 {
-    color: green;
-    text-align: center;
-}
-
-/* Class Selector */
-h3.heading {
-    color: blue;
-}
-
-/* ID Selector */
-hr#line {
-    height: 3px;
-    background-color: black;
-}
-
-/* Descendant Selector */
-div p {
-    color: brown;
-    font-size: 16px;
-}
-
-/* Child Selector */
-div > span {
-    color: red;
-    font-weight: bold;
-}
-
-/* Attribute Selector */
-time[datetime] {
-    color: purple;
-}
-
-/* Element Selector */
-img {
-    border: 2px solid black;
-    width: 150px;
-}
-
-/* Pseudo-class Selector */
-a:hover {
-    color: orange;
-}
-
-/* Pseudo-element Selector */
-p::first-letter {
-    font-size: 30px;
-    color: navy;
-}
 
 `
   },
@@ -1310,7 +1254,7 @@ selectionSort($students, 'name');
 <head>
     <title>jQuery Program</title>
 
-    <!-- jQuery CDN -->
+ 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
@@ -1345,18 +1289,18 @@ selectionSort($students, 'name');
 
 <h2>jQuery Demo</h2>
 
-<!-- Paragraph -->
+
 <p id="para">This is a paragraph.</p>
 <button id="addPara">Append Paragraph</button>
 
-<!-- List -->
+
 <ul id="list">
     <li>Item 1</li>
     <li>Item 2</li>
 </ul>
 <button id="addList">Append List Item</button>
 
-<!-- Div for animation -->
+
 <div class="box" id="box">Animate Me</div>
 <button id="animate">Animate Div</button>
 
@@ -1368,13 +1312,11 @@ $(document).ready(function(){
         $("#para").append(" Added text");
     });
 
-    // a) Append content to list
     $("#addList").click(function(){
         $("#list").append("<li>New Item</li>");
     });
 
-    // b) Animate div
-    // c) Change color after animation
+  
     $("#animate").click(function(){
         $("#box").animate({
             width: "300px"
@@ -1399,12 +1341,11 @@ $(document).ready(function(){
     height: "h-40",
     code: String.raw`
 
-    <!DOCTYPE html>
+   <!DOCTYPE html>
 <html>
 <head>
 <title>AJAX Program</title>
 
-<!-- jQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
@@ -1440,28 +1381,24 @@ $(document).ready(function(){
 
 <h2>AJAX Demonstration</h2>
 
-<!-- a) AJAX without jQuery -->
 <div class="box">
     <h3>a) AJAX without jQuery</h3>
     <button onclick="loadText()">Load Text</button>
     <pre id="out1"></pre>
 </div>
 
-<!-- b) AJAX with jQuery -->
 <div class="box">
     <h3>b) AJAX with jQuery</h3>
     <button id="jqLoad">Load Text</button>
     <pre id="out2"></pre>
 </div>
 
-<!-- c) getJSON -->
 <div class="box">
     <h3>c) getJSON()</h3>
     <button id="getJson">Load JSON</button>
     <pre id="out3"></pre>
 </div>
 
-<!-- d) parseJSON -->
 <div class="box">
     <h3>d) parseJSON()</h3>
     <button id="parseJson">Parse JSON</button>
@@ -1469,7 +1406,6 @@ $(document).ready(function(){
 </div>
 
 <script>
-/* a) AJAX without jQuery */
 function loadText() {
     let x = new XMLHttpRequest();
     x.onload = function() {
@@ -1479,7 +1415,6 @@ function loadText() {
     x.send();
 }
 
-/* b) AJAX with jQuery */
 $("#jqLoad").click(function(){
     $.ajax({
         url: "data.txt",
@@ -1489,14 +1424,12 @@ $("#jqLoad").click(function(){
     });
 });
 
-/* c) getJSON */
 $("#getJson").click(function(){
     $.getJSON("data.json", function(data){
         $("#out3").text("Name: " + data.name + ", Age: " + data.age);
     });
 });
 
-/* d) parseJSON */
 $("#parseJson").click(function(){
     let txt = '{"city":"Bangalore","state":"Karnataka"}';
     let obj = $.parseJSON(txt);
@@ -1513,7 +1446,6 @@ This content is loaded using AJAX.
     "name": "Rahul",
     "age": 20
 }
-
 
 
 `
