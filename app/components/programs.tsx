@@ -856,7 +856,7 @@ HTML
 
   {
     id: "p7",
-    title: "Program 7: PHP Visitor Counter",
+    title: "Program 7: ",
     height: "h-56",
     code: String.raw`
 <!DOCTYPE html>
@@ -1340,133 +1340,107 @@ $(document).ready(function(){
     title: "Program 10: Full Stack Mini Project",
     height: "h-40",
     code: String.raw`
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-<title>JSON & Hash Converter</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-}
-.container {
-    width: 420px;
-    margin: auto;
-}
-h2 {
-    text-align: center;
-}
-h3 {
-    margin-top: 20px;
-}
-textarea {
-    width: 100%;
-    height: 70px;
-}
-button {
-    margin-top: 5px;
-    padding: 5px 10px;
-}
-pre {
-    background: #f2f2f2;
-    padding: 8px;
-    white-space: pre-wrap;
-}
-</style>
+    <title>AJAX All in One</title>
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 8px 12px;
+        }
+        div {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
 </head>
-
 <body>
-<div class="container">
 
-<h2>JSON & Hash Converter</h2>
+<h2>AJAX Programs</h2>
 
-<h3>Convert JSON Text to JavaScript Object</h3>
-<label>Enter JSON Text:</label>
-<textarea id="jsonInput">{"name":"John","age":30}</textarea>
-<br>
-<button onclick="convertJsonToObject()">Convert to Object</button>
-<pre id="jsonObjectOutput"></pre>
 
-<h3>Convert JSON Date</h3>
-<label>Enter JSON with Date (e.g., {"date":"2024-11-21T14:20:00Z"}):</label>
-<textarea id="jsonDateInput">{"date":"2024-11-21T14:20:00Z"}</textarea>
-<br>
-<button onclick="convertJsonToDate()">Convert to Date</button>
-<pre id="jsonDateOutput"></pre>
+<button onclick="loadTextJS()">AJAX without jQuery</button>
+<div id="out1"></div>
 
-<h3>Convert JSON to CSV & CSV to JSON</h3>
-<label>Enter JSON:</label>
-<textarea id="jsonCsvInput">[{"name":"John","age":30},{"name":"Jane","age":25}]</textarea>
-<br>
-<button onclick="jsonToCsv()">JSON to CSV</button>
-<button onclick="csvToJson()">CSV to JSON</button>
 
-<pre id="csvOutput"></pre>
-<pre id="jsonFromCsvOutput"></pre>
+<button id="btnAjax">AJAX with jQuery</button>
+<div id="out2"></div>
 
-<h3>Create Hash from String</h3>
-<label>Enter String:</label>
-<textarea id="stringInput">VTU</textarea>
-<br>
-<button onclick="createHash()">Generate Hash</button>
-<pre id="hashOutput"></pre>
+<button id="btnJSON">getJSON()</button>
+<div id="out3"></div>
 
-</div>
+
+<button onclick="parseJSON()">parseJSON()</button>
+<div id="out4"></div>
 
 <script>
-function convertJsonToObject() {
-    let obj = JSON.parse(jsonInput.value);
-    jsonObjectOutput.innerText =
-        "Converted JavaScript Object:\n" +
-        JSON.stringify(obj, null, 2);
+
+function loadTextJS() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "text.txt", true);
+    xhr.send();
+    xhr.onload = function () {
+        document.getElementById("out1").innerHTML = xhr.responseText;
+    };
 }
 
-function convertJsonToDate() {
-    let obj = JSON.parse(jsonDateInput.value);
-    let d = new Date(obj.date);
-    jsonDateOutput.innerText =
-        "Converted Date: " + d.toString();
-}
 
-function jsonToCsv() {
-    let arr = JSON.parse(jsonCsvInput.value);
-    let keys = Object.keys(arr[0]);
-    let csv = keys.join(",") + "\n" +
-        arr.map(o => keys.map(k => o[k]).join(",")).join("\n");
-
-    csvOutput.innerText = "Converted CSV:\n" + csv;
-}
-
-function csvToJson() {
-    let rows = csvOutput.innerText.replace("Converted CSV:\n","").split("\n");
-    let keys = rows[0].split(",");
-    let json = rows.slice(1).map(r => {
-        let obj = {};
-        r.split(",").forEach((v,i)=>obj[keys[i]]=v);
-        return obj;
+$("#btnAjax").click(function () {
+    $.ajax({
+        url: "text.txt",
+        success: function (data) {
+            $("#out2").html(data);
+        }
     });
+});
 
-    jsonFromCsvOutput.innerText =
-        "Converted JSON:\n" + JSON.stringify(json, null, 2);
-}
 
-function createHash() {
-    let data = new TextEncoder().encode(stringInput.value);
-    crypto.subtle.digest("SHA-256", data).then(buf => {
-        let hash = [...new Uint8Array(buf)]
-            .map(b => b.toString(16).padStart(2,"0"))
-            .join("");
-        hashOutput.innerText =
-            "Generated SHA-256 Hash:\n" + hash;
+$("#btnJSON").click(function () {
+    $.getJSON("data.json", function (data) {
+        $("#out3").html(
+            data.name + "<br>" +
+            data.branch + "<br>" +
+            data.college
+        );
     });
+});
+
+
+function parseJSON() {
+    var jsonText = '{"name":"Darshan","age":21,"course":"CSE"}';
+    var obj = JSON.parse(jsonText);
+
+    document.getElementById("out4").innerHTML =
+        obj.name + "<br>" +
+        obj.age + "<br>" +
+        obj.course;
 }
 </script>
 
 </body>
 </html>
 
+Hello, this content is loaded using AJAX without jQuery. ->> text.txt
+
+--data.json
+{                       
+  "name": "Darshan",
+  "branch": "CSE",
+  "college": "VTU"
+}
+
+
 
 `
 }
-];
+];  
