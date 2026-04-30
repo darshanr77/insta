@@ -1,4 +1,3 @@
-// app/components/programs.tsx
 
 export const programs = [
 
