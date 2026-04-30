@@ -4,612 +4,574 @@ export const programs = [
 
   {
     id: "p1",
-    title: "Program 1: California Housing — Histograms, Boxplots & Outliers",
+    title: "Program 1: Word Embeddings (GloVe) — Vector Arithmetic",
     height: "h-96",
     code: String.raw`
-import pandas as pd
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.datasets import fetch_california_housing
+import gensim.downloader as api      
 
-data = fetch_california_housing(as_frame=True)
-housing_df = data.frame
+# Load pre-trained word vectors (GloVe)
+print("Loading pre-trained GloVe vectors... This may take a few seconds.")
+model = api.load("glove-wiki-gigaword-100")  
+#model1 = api.load("word2vec-google-news-300")               #
+print("Model loaded successfully!
+")
 
-numerical_features = housing_df.select_dtypes(include=[np.number]).columns
+# Experiment 1: king - man + woman
+result1 = model.most_similar(
+    positive=['king', 'woman'],
+    negative=['man'],
+    topn=1
+)
 
-plt.figure(figsize=(15, 10))
-for i, feature in enumerate(numerical_features):
-    plt.subplot(3, 3, i + 1)
-    sns.histplot(housing_df[feature], kde=True, bins=30, color='blue')
-    plt.title(f'Distribution of {feature}')
-plt.tight_layout()
-plt.show()
+# Experiment 2: paris - france + italy
+result2 = model.most_similar(
+    positive=['paris', 'italy'],
+    negative=['france'],
+    topn=1
+)
 
-plt.figure(figsize=(15, 10))
-for i, feature in enumerate(numerical_features):
-    plt.subplot(3, 3, i + 1)
-    sns.boxplot(x=housing_df[feature], color='orange')
-    plt.title(f'Box Plot of {feature}')
-plt.tight_layout()
-plt.show()
+# Experiment 3: father - man + woman
+result3 = model.most_similar(
+    positive=['father', 'woman'],
+    negative=['man'],
+    topn=1
+)
 
-print("Outliers Detection:")
-for feature in numerical_features:
-    Q1 = housing_df[feature].quantile(0.25)
-    Q3 = housing_df[feature].quantile(0.75)
-    IQR = Q3 - Q1
-    lower = Q1 - 1.5 * IQR
-    upper = Q3 + 1.5 * IQR
-    outliers = housing_df[(housing_df[feature] < lower) | (housing_df[feature] > upper)]
-    print(f"{feature}: {len(outliers)} outliers")
+# Experiment 4: brother - man + woman
+result4 = model.most_similar(
+    positive=['brother', 'woman'],
+    negative=['man'],
+    topn=3
+)
 
-print("\\nDataset Summary:")
-print(housing_df.describe())
+# Experiment 5: walking - walk + swim
+result5 = model.most_similar(
+    positive=['walking', 'swim'],
+    negative=['walk'],
+    topn=1
+)
+
+# Experiment 6: uncle - man + woman - aunt +man
+result6 = model.most_similar(
+    positive=['uncle', 'woman','man'],
+    negative=['man','aunt'],
+    topn=5
+)
+
+# Printing results
+print("Experiment Results:
+")
+print("king - man + woman =", result1)
+print("paris - france + italy =", result2)
+print("father - man + woman =", result3)
+print("brother - man + woman =", result4)
+print("walking - walk + swim =", result5)
+print("uncle - man + woman =", result6)
 `
   },
 
   {
     id: "p2",
-    title: "Program 2: Correlation Heatmap & Pair Plot",
+    title: "Program 2: PCA + Word2Vec Visualization",
     height: "h-80",
     code: String.raw`
-import pandas as pd
-import seaborn as sns
+    # Module or library install command (run this in terminal before running the script)
+# pip install gensim matplotlib scikit-learn
+
+import gensim.downloader as api
+from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
-from sklearn.datasets import fetch_california_housing
 
-data = fetch_california_housing(as_frame=True).frame
+# Load model
+model = api.load("word2vec-google-news-300")
 
-corr = data.corr()
+# Select 10 domain-specific words (technology domain)
+words = ['computer', 'internet', 'software', 'hardware', 'keyboard', 'mouse', 'server', 'network', 'programming', 'database']
+vectors = [model[word] for word in words]
 
-plt.figure(figsize=(10,8))
-sns.heatmap(corr, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
-plt.title("Correlation Matrix")
-plt.show()
+# Dimensionality reduction using PCA
+pca = PCA(n_components=2)
+reduced = pca.fit_transform(vectors)
 
-sns.pairplot(data, diag_kind='kde', plot_kws={'alpha':0.5})
-plt.suptitle("Pair Plot", y=1.02)
+# Generate 5 semantically similar words for a given input
+input_word = 'computer'
+similar_words = model.most_similar(input_word, topn=5)
+
+# Print the similar words to terminal
+print(f"Top 5 words similar to '{input_word}':")
+for word, score in similar_words:
+    print(f"{word}: {score:.4f}")
+
+# Plot the word embeddings
+plt.figure(figsize=(8, 6))
+for i, word in enumerate(words):
+    plt.scatter(reduced[i, 0], reduced[i, 1])
+    plt.annotate(word, (reduced[i, 0], reduced[i, 1]))
+plt.title("PCA Visualization of Technology Word Embeddings")
+plt.xlabel("PC1")
+plt.ylabel("PC2")
+plt.grid(True)
+
+# Show the plot
 plt.show()
 `
   },
 
   {
     id: "p3",
-    title: "Program 3: PCA on Iris Dataset",
-    height: "h-72",
+    title: "Program 3: Word2Vec + t-SNE (Medical)",
+    height: "h-80",
     code: String.raw`
-import numpy as np
-import pandas as pd
-from sklearn.datasets import load_iris
-from sklearn.decomposition import PCA
+    # Module or library install command (run this in terminal before running the script)
+# pip install gensim matplotlib scikit-learn
+
 import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
+import numpy as np
+from gensim.models import Word2Vec
 
-iris = load_iris()
-X = iris.data
-y = iris.target
+# Sample domain-specific corpus (medical domain)
+medical_corpus = [
+    "The patient was diagnosed with diabetes and hypertension.",
+    "MRI scans reveal abnormalities in the brain tissue.",
+    "The treatment involves antibiotics and regular monitoring.",
+    "Symptoms include fever, fatigue, and muscle pain.",
+    "The vaccine is effective against several viral infections.",
+    "Doctors recommend physical therapy for recovery.",
+    "The clinical trial results were published in the journal.",
+    "The surgeon performed a minimally invasive procedure.",
+    "The prescription includes pain relievers and anti-inflammatory drugs.",
+    "The diagnosis confirmed a rare genetic disorder."
+]
 
-pca = PCA(n_components=2)
-X_reduced = pca.fit_transform(X)
+# Preprocess corpus (tokenize sentences and convert to lowercase)
+processed_corpus = [sentence.lower().split() for sentence in medical_corpus]
 
-plt.figure(figsize=(8,6))
-colors = ['r','g','b']
+# Train a Word2Vec model
+model = Word2Vec(sentences=processed_corpus, vector_size=100, window=5, min_count=1, workers=4, epochs=50)
 
-for i in range(3):
-    plt.scatter(X_reduced[y==i,0], X_reduced[y==i,1],
-                label=iris.target_names[i], color=colors[i])
+# Extract embeddings for visualization
+words = list(model.wv.index_to_key)  # List of words in the vocabulary
+embeddings = np.array([model.wv[word] for word in words])  # Word embeddings for each word
 
-plt.title("PCA on Iris Dataset")
-plt.xlabel("PC1")
-plt.ylabel("PC2")
-plt.legend()
-plt.grid()
+# Dimensionality reduction using t-SNE
+tsne = TSNE(n_components=2, random_state=42, perplexity=5)
+tsne_result = tsne.fit_transform(embeddings)
+
+# Visualization of word embeddings
+plt.figure(figsize=(10, 8))
+plt.scatter(tsne_result[:, 0], tsne_result[:, 1], color="blue")
+
+# Annotating each point with the corresponding word
+for i, word in enumerate(words):
+    plt.text(tsne_result[i, 0] + 0.02, tsne_result[i, 1] + 0.02, word, fontsize=12)
+
+plt.title("Word Embeddings Visualization (Medical Domain)")
+plt.xlabel("Dimension 1")
+plt.ylabel("Dimension 2")
+plt.grid(True)
+
 plt.show()
+
+# Analyze domain-specific semantics
+def find_similar_words(input_word, top_n=5):
+    try:
+        similar_words = model.wv.most_similar(input_word, topn=top_n)
+        print(f"Words similar to '{input_word}':")
+        for word, similarity in similar_words:
+            print(f"  {word} ({similarity:.2f})")
+    except KeyError:
+        print(f"'{input_word}' not found in vocabulary.")
+
+# Generate semantically similar words
+find_similar_words("treatment")
+find_similar_words("vaccine")
 `
   },
 
   {
     id: "p4",
-    title: "Program 4: Find-S Algorithm",
-    height: "h-64",
+    title: "Program 4: Word2Vec Prompt Enrichment",
+    height: "h-72",
     code: String.raw`
-    import pandas as pd
-# Function to implement the Find-S Algorithm
-def find_s_algorithm(file_path):
-    # Read the dataset
-    
-    data = pd.read_csv(file_path)
-    print("Training data:")
-    print(data)
-    # Separate attributes and class label
-    attributes = data.columns[:-1] # All columns except the last one
-    class_label = data.columns[-1] # Last column is the class label
-    # Initialize hypothesis with '?' for each attribute
-    hypothesis = ['?' for _ in attributes]
-    # Iterate through the dataset to find the specific hypothesis
-    for index, row in data.iterrows():
-    # Only consider positive examples (class label == 'Yes')
-        if row[class_label] == 'Yes':
-            for i, value in enumerate(row[attributes]):
-    # If hypothesis is '?' or matches the current value, update hypothesis
-                if hypothesis[i] == '?' or hypothesis[i] == value:
-                    hypothesis[i] = value
-                else:
-                # If the value is different, set '?' for that attribute
-                    hypothesis[i] = '?'
-    return hypothesis
-    # Define file path
+from gensim.models import Word2Vec
 
-    # Call the Find-S algorithm
-file_path = "training_data.csv"
-hypothesis = find_s_algorithm(file_path)
-# Print the final hypothesis
-print("\nThe final hypothesis is:", hypothesis)
+# ── 1. Reuse the same Medical Corpus ─────────
+corpus = [
+    "The patient was diagnosed with diabetes and hypertension by doctor.",
+    "MRI scans reveal abnormalities in the brain tissue said the doctor.",
+    "The treatment by doctor involves antibiotics and regular monitoring.",
+    "Symptoms include fever, fatigue, and muscle pain.",
+    "The vaccine is effective against several viral infections.",
+    "Doctor recommend physical therapy for recovery.",
+    "The clinical trial results were published in the journal.",
+    "The surgeon performed a minimally invasive procedure.",
+    "The prescription by doctor includes pain relievers and anti-inflammatory drugs.",
+    "The diagnosis confirmed a rare genetic disorder."
+]
 
+sentences = [sentence.lower().split() for sentence in corpus]
 
+# ── 2. Train Word2Vec Model ─────────────────
+model = Word2Vec(sentences, vector_size=100, window=5, min_count=1, epochs=50)
 
+# ── 3. Original Prompt ──────────────────────
+original_prompt = "Write a short note about doctor and patient treatment."
 
-Sky,AirTemp,Humidity,Wind,Water,Forecast,EnjoySport
-Sunny,Warm,Normal,Strong,Warm,Same,Yes
-Sunny,Warm,High,Strong,Warm,Same,Yes
-Rainy,Cold,High,Strong,Warm,Change,No
-Sunny,Warm,High,Strong,Cool,Change,Yes
+# ── 4. Get Similar Words for Key Terms ──────
+def get_similar(word):
+    if word in model.wv:
+        return [w for w, s in model.wv.most_similar(word, topn=3)]
+    return []
+
+doctor_similar = get_similar("doctor")
+patient_similar = get_similar("patient")
+treatment_similar = get_similar("treatment")
+
+print("Similar to doctor:", doctor_similar)
+print("Similar to patient:", patient_similar)
+print("Similar to treatment:", treatment_similar)
+
+# ── 5. Create Enriched Prompt ───────────────
+enriched_prompt = f"""
+Write a detailed medical explanation about doctor,
+{', '.join(doctor_similar)},
+patient,
+{', '.join(patient_similar)},
+and treatment including
+{', '.join(treatment_similar)}.
+"""
+
+# ── 6. Simulated AI Response Generator ──────
+def generate_response(prompt):
+    return f"
+Generated Response:
+{prompt}"
+
+original_output = generate_response(original_prompt)
+enriched_output = generate_response(enriched_prompt)
+
+# ── 7. Print Outputs ────────────────────────
+print("
+--- ORIGINAL PROMPT ---")
+print(original_prompt)
+
+print("
+--- ENRICHED PROMPT ---")
+print(enriched_prompt)
+
+print("
+--- ORIGINAL OUTPUT ---")
+print(original_output)
+
+print("
+--- ENRICHED OUTPUT ---")
+print(enriched_output)
+
+# ── 8. Simple Comparison ────────────────────
+print("
+--- COMPARISON ---")
+print("Original Prompt Length:", len(original_prompt))
+print("Enriched Prompt Length:", len(enriched_prompt))
 `
   },
 
   {
     id: "p5",
-    title: "Program 5: k-Nearest Neighbors (Manual)",
-    height: "h-96",
+    title: "Program 5: Generate Paragraph from Word Embeddings",
+    height: "h-80",
     code: String.raw`
-    import numpy as np
-import matplotlib.pyplot as plt
-from collections import Counter
+# Required Libraries:
+# Install gensim if not already installed:
+# pip install gensim
 
-# Generate random data
-data = np.random.rand(100)
+import gensim.downloader as api  # For loading pre-trained word embeddings
+from gensim.models import KeyedVectors  # For working with word vectors
+import random  # For shuffling similar words
 
-# Label first 50 points
-labels = ["Class1" if x <= 0.5 else "Class2" for x in data[:50]]
+# Load pre-trained GloVe word vectors (100-dimensional, trained on Wikipedia + Gigaword)
+model = api.load("glove-wiki-gigaword-100")
 
-# Function to compute Euclidean distance
-def euclidean_distance(x1, x2):
-    return abs(x1 - x2)
+# Function to generate similar words for a given seed word
+def generate_similar_words(seed_word, topn=10):
+    # Check if the seed word exists in the model vocabulary
+    if seed_word in model:
+        # Return top 'n' similar words based on cosine similarity
+        return [word for word, _ in model.most_similar(seed_word, topn=topn)]
+    else:
+        # Return empty list if word not in vocabulary
+        return []
 
-# k-NN classifier function
-def knn_classifier(train_data, train_labels, test_point, k):
-    distances = [
-        (euclidean_distance(test_point, train_data[i]), train_labels[i])
-        for i in range(len(train_data))
-    ]
+# Function to create a meaningful paragraph using the seed and its similar words
+def create_paragraph(seed_word):
+    similar_words = generate_similar_words(seed_word, topn=10)
+    if not similar_words:
+        return f"No similar words found for '{seed_word}'."
 
-    distances.sort(key=lambda x: x[0])  # Sort by distance
-    k_nearest_neighbors = distances[:k]  # Get k nearest neighbors
-    k_nearest_labels = [label for _, label in k_nearest_neighbors]
+    # Randomly shuffle similar words and select 5
+    random.shuffle(similar_words)
+    selected_words = similar_words[:5]
 
-    return Counter(k_nearest_labels).most_common(1)[0][0]
+    # Construct a short creative paragraph
+    paragraph = f"In a world defined by {seed_word}, "
+    paragraph += f"people found themselves surrounded by concepts like {', '.join(selected_words[:-1])}, and {selected_words[-1]}. "
+    paragraph += f"These ideas shaped the way they thought, acted, and dreamed. Every step forward in their journey reflected the essence of '{seed_word}', "
+    paragraph += f"bringing them closer to understanding the true meaning of {selected_words[0]}."
 
-# Prepare the training and test data
-train_data = data[:50]
-train_labels = labels
-test_data = data[50:]
+    return paragraph
 
-# Values of k to test
-k_values = [1, 2, 3, 4, 5, 20, 30]
-
-print("--- k-Nearest Neighbors Classification ---")
-print("Training dataset: First 50 points labeled based on rule (x <= 0.5 -> Class1)")
-print("Testing dataset: Remaining 50 points to be classified\n")
-
-results = {}
-
-# Loop over different values of k
-for k in k_values:
-    print(f"Results for k = {k}:")
-
-    classified_labels = [
-        knn_classifier(train_data, train_labels, test_point, k)
-        for test_point in test_data
-    ]
-
-    results[k] = classified_labels
-
-    for i, label in enumerate(classified_labels, start=51):
-        print(f"Point x{i} (value: {test_data[i - 51]:.4f}) -> {label}")
-
-    print("\n")
-
-print("Classification complete.\n")
-
-# Visualization
-for k in k_values:
-    classified_labels = results[k]
-
-    class1_points = [
-        test_data[i] for i in range(len(test_data))
-        if classified_labels[i] == "Class1"
-    ]
-
-    class2_points = [
-        test_data[i] for i in range(len(test_data))
-        if classified_labels[i] == "Class2"
-    ]
-
-    plt.figure(figsize=(8, 5))
-
-    plt.scatter(
-        train_data,
-        [0] * len(train_data),
-        c=["blue" if label == "Class1" else "red" for label in train_labels],
-        label="Training Data",
-        marker="o"
-    )
-
-    plt.scatter(class1_points, [1] * len(class1_points),
-                c="blue", label="Class1 (Test)", marker="x")
-
-    plt.scatter(class2_points, [1] * len(class2_points),
-                c="red", label="Class2 (Test)", marker="x")
-
-    plt.title(f"k-NN Classification Results (k = {k})")
-    plt.xlabel("Data Points")
-    plt.ylabel("Level")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+# Example usage
+seed = "freedom"  # You can change this to any word like 'love', 'innovation', etc.
+print(create_paragraph(seed))
 `
   },
 
   {
     id: "p6",
-    title: "Program 6: Locally Weighted Regression",
-    height: "h-80",
+    title: "Program 6: Sentiment Analysis (Transformers)",
+    height: "h-72",
     code: String.raw`
-    import numpy as np
-import matplotlib.pyplot as plt
+# Step 1: Install required libraries (only run once)
+# pip install transformers torch
 
-# Gaussian Kernel Function
-def gaussian_kernel(x, xi, tau):
-    return np.exp(-np.sum((x - xi) ** 2) / (2 * tau ** 2))
+# Step 2: Import necessary library
+from transformers import pipeline
 
-# Locally Weighted Regression Function
-def locally_weighted_regression(x, X, y, tau):
-    m = X.shape[0]
+# Step 3: Load the sentiment analysis pipeline using a pre-trained model
+sentiment_pipeline = pipeline("sentiment-analysis")
 
-    weights = np.array([
-        gaussian_kernel(x, X[i], tau) for i in range(m)
-    ])
+# Step 4: Define input sentences (simulating real-world user reviews)
+input_sentences = [
+    "The new phone I bought is absolutely amazing!",
+    "Worst customer service ever. I'm never coming back.",
+    "The experience was average, nothing special.",
+    "Fast delivery and the packaging was perfect.",
+    "The product broke within two days. Very disappointed."
+]
 
-    W = np.diag(weights)
+# Step 5: Perform sentiment analysis
+results = sentiment_pipeline(input_sentences)
 
-    X_transpose_W = X.T @ W
+# Step 6: Display the results
+print("Sentiment Analysis Results:
+")
+for sentence, result in zip(input_sentences, results):
+    print(f"Input Sentence: {sentence}")
+    print(f"Predicted Sentiment: {result['label']}, Confidence Score: {result['score']:.2f}
+")
 
-    theta = np.linalg.inv(X_transpose_W @ X) @ X_transpose_W @ y
-
-    return x @ theta
-
-
-# Generate sample data
-np.random.seed(42)
-
-X = np.linspace(0, 2 * np.pi, 100)
-y = np.sin(X) + 0.1 * np.random.randn(100)
-
-# Add bias term
-X_bias = np.c_[np.ones(X.shape), X]
-
-# Test points
-x_test = np.linspace(0, 2 * np.pi, 200)
-x_test_bias = np.c_[np.ones(x_test.shape), x_test]
-
-tau = 0.5
-
-# Predict values
-y_pred = np.array([
-    locally_weighted_regression(xi, X_bias, y, tau)
-    for xi in x_test_bias
-])
-
-# Plot
-plt.figure(figsize=(10, 6))
-plt.scatter(X, y, color='red', label='Training Data', alpha=0.7)
-plt.plot(x_test, y_pred, color='blue', label=f'LWR Fit (tau={tau})', linewidth=2)
-
-plt.xlabel('X')
-plt.ylabel('y')
-plt.title('Locally Weighted Regression')
-plt.legend()
-plt.grid(True)
-plt.show()
 `
   },
 
   {
     id: "p7",
-    title: "Program 7: Linear Regression — California Housing",
-    height: "h-80",
+    title: "Program 7: Text Summarization",
+    height: "h-72",
     code: String.raw`
-    import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+# Required libraries (install before running this script):
+# pip install transformers torch
 
-from sklearn.datasets import fetch_california_housing
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import PolynomialFeatures, StandardScaler
-from sklearn.pipeline import make_pipeline
-from sklearn.metrics import mean_squared_error, r2_score
+from transformers import pipeline  # Import the summarization pipeline from Hugging Face Transformers
 
+# Load a smaller and faster pre-trained model for summarization
+# 't5-small' is lightweight and quick, ideal for small/medium passages
+summarizer = pipeline("summarization", model="t5-small")
 
-# ---------------------------------------
-# Linear Regression - California Housing
-# ---------------------------------------
-def linear_regression_california():
-    housing = fetch_california_housing(as_frame=True)
+# Input text to be summarized
+text = """
+The Industrial Revolution, which took place from the 18th to the 19th centuries, was a period during which predominantly agrarian, rural societies in Europe and America became industrial and urban. Prior to the Industrial Revolution, manufacturing was often done in people's homes, using hand tools or basic machines. Industrialization marked a shift to powered, special-purpose machinery, factories and mass production. The iron and textile industries, along with the development of the steam engine, played central roles in the Industrial Revolution, which also saw improved systems of transportation, communication and banking. While industrialization brought about an increased volume and variety of manufactured goods and an improved standard of living for some, it also resulted in often grim employment and living conditions for the poor and working classes.
+"""
 
-    X = housing.data[["AveRooms"]]   # Single feature
-    y = housing.target               # Target
+# Generate the summary of the input text
+summary = summarizer(text, max_length=60, min_length=30, do_sample=False)
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-
-    model = LinearRegression()
-    model.fit(X_train, y_train)
-
-    y_pred = model.predict(X_test)
-
-    # Plot
-    plt.figure(figsize=(8, 5))
-    plt.scatter(X_test, y_test, color="blue", label="Actual")
-    plt.scatter(X_test, y_pred, color="red", label="Predicted")
-    plt.xlabel("Average number of rooms (AveRooms)")
-    plt.ylabel("Median value of homes")
-    plt.title("Linear Regression - California Housing")
-    plt.legend()
-    plt.show()
-
-    # Metrics
-    print("Linear Regression - California Housing")
-    print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
-    print("R^2 Score:", r2_score(y_test, y_pred))
-    print("\n")
-
-
-# ---------------------------------------
-# Polynomial Regression - Auto MPG
-# ---------------------------------------
-def polynomial_regression_auto_mpg():
-
-    url = "https://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data"
-
-    column_names = [
-        "mpg", "cylinders", "displacement", "horsepower",
-        "weight", "acceleration", "model_year", "origin"
-    ]
-
-    data = pd.read_csv(url, sep="\s+", names=column_names, na_values="?")
-    data = data.dropna()
-
-    X = data["displacement"].values.reshape(-1, 1)
-    y = data["mpg"].values
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-
-    poly_model = make_pipeline(
-        PolynomialFeatures(degree=2),
-        StandardScaler(),
-        LinearRegression()
-    )
-
-    poly_model.fit(X_train, y_train)
-
-    y_pred = poly_model.predict(X_test)
-
-    # Plot
-    plt.figure(figsize=(8, 5))
-    plt.scatter(X_test, y_test, color="blue", label="Actual")
-    plt.scatter(X_test, y_pred, color="red", label="Predicted")
-    plt.xlabel("Displacement")
-    plt.ylabel("Miles per gallon (mpg)")
-    plt.title("Polynomial Regression - Auto MPG")
-    plt.legend()
-    plt.show()
-
-    # Metrics
-    print("Polynomial Regression - Auto MPG")
-    print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
-    print("R^2 Score:", r2_score(y_test, y_pred))
-    print("\n")
-
-
-# ---------------------------------------
-# Main Function
-# ---------------------------------------
-if __name__ == "__main__":
-    print("Demonstrating Linear Regression and Polynomial Regression\n")
-
-    linear_regression_california()
-    polynomial_regression_auto_mpg()
+# Print the summarized output
+print(summary[0]['summary_text'])
 `
   },
 
   {
     id: "p8",
-    title: "Program 8: Decision Tree — Breast Cancer",
+    title: "Program 8: LLM Document Summary (Cohere)",
     height: "h-80",
     code: String.raw`
-    import numpy as np
-import matplotlib.pyplot as plt
+!pip install -qU langchain-cohere langchain-community langchain-core cohere
 
-from sklearn.datasets import load_breast_cancer
-from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
-from sklearn import tree
+# ===============================================================
+# 2. IMPORTS & AUTHENTICATION
+# ===============================================================
+import os
+from google.colab import drive, userdata
+from langchain_cohere import ChatCohere
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_community.document_loaders import TextLoader
 
-# Load dataset
-data = load_breast_cancer()
+# Setup API Key
+try:
+    # Try getting from Colab Secrets (🔑 icon on the left)
+    os.environ["COHERE_API_KEY"] = userdata.get('COHERE_API_KEY')
+    if not os.environ["COHERE_API_KEY"]:
+        raise ValueError
+except:
+    # Manual fallback - using your verified key
+    os.environ["COHERE_API_KEY"] = ""
 
-X = data.data
-y = data.target
+# Mount Google Drive
+drive.mount('/content/drive', force_remount=True)
 
-# Split dataset
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
+# ===============================================================
+# 3. LOAD THE DOCUMENT
+# ===============================================================
+file_path = "/content/drive/MyDrive/1.txt"
 
-# Train Decision Tree model
-clf = DecisionTreeClassifier(random_state=42)
-clf.fit(X_train, y_train)
+try:
+    # Loading file '1' as plain text
+    loader = TextLoader(file_path, encoding='utf-8')
+    documents = loader.load()
+    text_data = documents[0].page_content
+    print(f"✅ File loaded successfully! ({len(text_data)} characters found)")
+except Exception as e:
+    print(f"❌ Error loading file: {e}")
+    text_data = ""
 
-# Predict test data
-y_pred = clf.predict(X_test)
+# ===============================================================
+# 4. RUN SUMMARIZATION (2026 Model Version)
+# ===============================================================
+if text_data:
+    # Using 'command-light' as it is the current active 2026 endpoint
+    # If this also 404s, 'command-nightly' is the final fallback for newer APIs
+    try:
+        llm = ChatCohere(model="command-light", temperature=0.3)
 
-# Accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print(f"Model Accuracy: {accuracy * 100:.2f}%")
+        prompt = ChatPromptTemplate.from_template("""
+        You are an AI research assistant. Provide a structured summary of the text below.
 
-# Predict new sample
-new_sample = np.array([X_test[0]])
-prediction = clf.predict(new_sample)
+        - **Main Topic**: One sentence overview.
+        - **Key Details**: Bullet points of main facts.
+        - **Conclusion**: A brief final takeaway.
 
-prediction_class = "Benign" if prediction[0] == 1 else "Malignant"
+        TEXT:
+        {text}
+        """)
 
-print(f"Predicted Class for the new sample: {prediction_class}")
+        chain = prompt | llm | StrOutputParser()
 
-# Plot Decision Tree
-plt.figure(figsize=(12, 8))
-tree.plot_tree(
-    clf,
-    filled=True,
-    feature_names=data.feature_names,
-    class_names=data.target_names
-)
+        print("
+🚀 GENERATING SUMMARY...
+" + "="*40)
+        summary = chain.invoke({"text": text_data})
+        print(summary)
 
-plt.title("Decision Tree - Breast Cancer Dataset")
-plt.show()
+    except Exception as e:
+        if "404" in str(e):
+            print("⚠️ 'command-light' not found. Trying final 2026 fallback: 'command-nightly'...")
+            llm_fallback = ChatCohere(model="command-nightly", temperature=0.3)
+            chain_fallback = prompt | llm_fallback | StrOutputParser()
+            print(chain_fallback.invoke({"text": text_data}))
+        else:
+            print(f"❌ Execution Error: {e}")
+else:
+    print("⚠️ No content to summarize. Check your file content in Google Drive.")
+
 `
   },
 
   {
     id: "p9",
-    title: "Program 9: Naive Bayes — Olivetti Faces",
+    title: "Program 9: Structured JSON Extraction (Cohere)",
     height: "h-80",
     code: String.raw`
-    import numpy as np
-import matplotlib.pyplot as plt
+from typing import List, Optional
+from pydantic import BaseModel
+import cohere
+import json
+import re
 
-from sklearn.datasets import fetch_olivetti_faces
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-# Load dataset (requires internet first time)
-data = fetch_olivetti_faces(shuffle=True, random_state=42)
+# -------------------------------
+# 1. API KEY
+# -------------------------------
+co = cohere.Client("YOUR API")
 
-X = data.data
-y = data.target
 
-# Split dataset
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42
-)
+# -------------------------------
+# 2. Schema
+# -------------------------------
+class InstitutionInfo(BaseModel):
+    name: str
+    founder: Optional[str] = None
+    founded_year: Optional[str] = None
+    branches: Optional[List[str]] = None
+    employees: Optional[str] = None
+    summary: str
 
-# Train Gaussian Naive Bayes
-gnb = GaussianNB()
-gnb.fit(X_train, y_train)
 
-# Predict
-y_pred = gnb.predict(X_test)
+# -------------------------------
+# 3. Prompt
+# -------------------------------
+def build_prompt(name: str):
+    return f"""
+You are a Wikipedia expert.
 
-# Accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print(f'Accuracy: {accuracy * 100:.2f}%')
+Extract information about: {name}
 
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred, zero_division=1))
+Return ONLY valid JSON:
 
-print("\nConfusion Matrix:")
-print(confusion_matrix(y_test, y_pred))
+{{
+  "name": "",
+  "founder": "",
+  "founded_year": "",
+  "branches": [],
+  "employees": "",
+  "summary": "4-line summary"
+}}
 
-# Cross-validation
-cross_val_accuracy = cross_val_score(gnb, X, y, cv=5, scoring='accuracy')
-print(f'\nCross-validation accuracy: {cross_val_accuracy.mean() * 100:.2f}%')
+Rules:
+- If unknown, use null
+- branches must be a list
+- summary must be exactly 4 lines
+- Return ONLY JSON, no extra text
+"""
 
-# Display some predictions
-fig, axes = plt.subplots(3, 5, figsize=(12, 8))
 
-for ax, image, label, prediction in zip(
-    axes.ravel(), X_test[:15], y_test[:15], y_pred[:15]
-):
-    ax.imshow(image.reshape(64, 64), cmap=plt.cm.gray)
-    ax.set_title(f"True: {label}\nPred: {prediction}")
-    ax.axis('off')
+# -------------------------------
+# 4. CALL COHERE (UPDATED)
+# -------------------------------
+def get_institution_info(name: str) -> InstitutionInfo:
+    response = co.chat(
+        model="command-a-03-2025",   
+        message=build_prompt(name),
+        temperature=0.3
+    )
 
-plt.tight_layout()
-plt.show()
-`
-  },
+    text = response.text.strip()
 
-  {
-    id: "p10",
-    title: "Program 10: K-Means Clustering — Breast Cancer",
-    height: "h-96",
-    code: String.raw`
-    import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.datasets import load_breast_cancer
-from sklearn.cluster import KMeans
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
-from sklearn.metrics import confusion_matrix, classification_report
-data = load_breast_cancer()
-X = data.data
-y = data.target
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
-kmeans = KMeans(n_clusters=2, random_state=42)
-y_kmeans = kmeans.fit_predict(X_scaled)
-print("Confusion Matrix:")
-print(confusion_matrix(y, y_kmeans))
-print("\nClassification Report:")
-print(classification_report(y, y_kmeans))
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_scaled)
-df = pd.DataFrame(X_pca, columns=['PC1', 'PC2'])
-df['Cluster'] = y_kmeans
-df['True Label'] = y
-plt.figure(figsize=(8, 6))
-sns.scatterplot(data=df, x='PC1', y='PC2', hue='Cluster', palette='Set1', s=100,
-edgecolor='black', alpha=0.7)
-plt.title('K-Means Clustering of Breast Cancer Dataset')
-plt.xlabel('Principal Component 1')
-plt.ylabel('Principal Component 2')
-plt.legend(title="Cluster")
-plt.show()
-plt.figure(figsize=(8, 6))
-sns.scatterplot(data=df, x='PC1', y='PC2', hue='True Label', palette='coolwarm',
-s=100, edgecolor='black', alpha=0.7)
-plt.title('True Labels of Breast Cancer Dataset')
-plt.xlabel('Principal Component 1')
-plt.ylabel('Principal Component 2')
-plt.legend(title="True Label")
-plt.show()
-plt.figure(figsize=(8, 6))
-sns.scatterplot(data=df, x='PC1', y='PC2', hue='Cluster', palette='Set1', s=100,
-edgecolor='black', alpha=0.7)
-centers = pca.transform(kmeans.cluster_centers_)
-plt.scatter(centers[:, 0], centers[:, 1], s=200, c='red', marker='X', label='Centroids')
-plt.title('K-Means Clustering with Centroids')
-plt.xlabel('Principal Component 1')
-plt.ylabel('Principal Component 2')
-plt.legend(title="Cluster")
-plt.show()
+    # Extract JSON safely
+    match = re.search(r"\{.*\}", text, re.DOTALL)
+    if not match:
+        raise ValueError("No JSON found in response:
+" + text)
+
+    data = json.loads(match.group())
+
+    return InstitutionInfo(**data)
+
+
+# -------------------------------
+# 5. RUN
+# -------------------------------
+name = input("Enter Institution Name: ")
+result = get_institution_info(name)
+
+print("
+--- RESULT ---
+")
+print(result)
+
+print("
+--- DETAILS ---")
+print(result.model_dump())
 `
   }
 
